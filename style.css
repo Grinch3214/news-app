@@ -12,8 +12,14 @@ html, body {
 	line-height: 24px;
 }
 
+.card .card-image {
+	min-height: 150px;
+	background: #546e7a;
+}
+
 .card .card-image .card-title {
 	padding: 10px 24px;
+	width: 100%;
 }
 
 .progress {
@@ -55,4 +61,8 @@ input[type=text]:not(.browser-default):focus:not([readonly]),
 .dropdown-content li > a,
 .dropdown-content li > span {
 	color: #546e7a;
+}
+
+.page-footer {
+  padding-top: 0px;
 }

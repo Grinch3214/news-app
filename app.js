@@ -70,6 +70,16 @@ const newsService = (function() {
 	}
 })();
 
+// Elements
+const form = document.forms['newsControls'];
+const countrySelect = form.elements['country'];
+const searchInput = form.elements['search'];
+
+form.addEventListener('submit', (e) => {
+	e.preventDefault();
+	loadNews();
+});
+
 //  init selects
 document.addEventListener('DOMContentLoaded', function() {
   M.AutoInit();
@@ -77,7 +87,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadNews() {
-	newsService.topHeadLines('ua', onGetResponse);
+	const country = countrySelect.value;
+	const searchText = searchInput.value;
+
+	if (!searchText) {
+		newsService.topHeadLines(country, onGetResponse);
+	} else {
+		newsService.everything(searchText, onGetResponse);
+	}
+	
 };
 
 function onGetResponse(err, res) {
@@ -112,7 +130,7 @@ function newsTemplate({ urlToImage, title, url, description }) {
 					<p>${description || title}</p>
 				</div>
 				<div class="card-action">
-					<a class="blue-grey-text text-darken-1" href="${url}">Read more</a>
+					<a class="blue-grey-text text-darken-1" href="${url}" target="_blank">Read more</a>
 				</div>
 			</div>
 		</div>
