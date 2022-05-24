@@ -100,18 +100,19 @@ function renderNews(news) {
 
 //news item template
 function newsTemplate({ urlToImage, title, url, description }) {
+	const noImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJX_eeDPL64HX3GM8TnLhjWkhk3K-XysfYvg&usqp=CAU';
 	return `
 		<div class="col s12">
 			<div class="card">
 				<div class="card-image">
-					<img src="${urlToImage}">
+					<img src="${urlToImage || noImage}">
 					<span class="card-title">${title || ''}</span>
 				</div>
 				<div class="card-content">
-					<p>${description || ''}</p>
+					<p>${description || title}</p>
 				</div>
 				<div class="card-action">
-					<a href="${url}">Read more</a>
+					<a class="blue-grey-text text-darken-1" href="${url}">Read more</a>
 				</div>
 			</div>
 		</div>

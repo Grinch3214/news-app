@@ -1,6 +1,21 @@
+html, body {
+	background: #eceff1;
+	scroll-behavior: smooth;
+}
+
 .news-container .card-title {
   background: rgba(0, 0, 0, 0.7);
 }
+
+.card .card-title {
+	font-size: 18px;
+	line-height: 24px;
+}
+
+.card .card-image .card-title {
+	padding: 10px 24px;
+}
+
 .progress {
   position: fixed;
   top: 0;
@@ -10,8 +25,34 @@
   z-index: 1;
 }
 
-.news-container .grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-flow: dense;
+@media screen and (min-width: 767px) {
+	.news-container .grid-container {
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-auto-flow: dense;
+	}
+}
+
+@media screen and (min-width: 991px) {
+	.news-container .grid-container {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	.news-container .grid-container {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+}
+
+input[type=text]:not(.browser-default):focus:not([readonly]),
+.select-wrapper input.select-dropdown:focus {
+	border-bottom: 1px solid #546e7a;
+  -webkit-box-shadow: 0 1px 0 0 #546e7a;
+  box-shadow: 0 1px 0 0 #546e7a;
+}
+
+.dropdown-content li > a,
+.dropdown-content li > span {
+	color: #546e7a;
 }
