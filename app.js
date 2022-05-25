@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadNews() {
+	showPreloader();
 	const country = countrySelect.value;
 	const searchText = searchInput.value;
 
@@ -99,13 +100,26 @@ function loadNews() {
 };
 
 function onGetResponse(err, res) {
-	console.log(res);
+	removePreoared();
+
+	if(err) {
+		showMessage(err, 'error-msg');
+		return
+	}
+	if(!res.articles.length) {
+		//show empty message
+		console.log('empty res')
+		return
+	}
 	renderNews(res.articles);
 }
 
 //render news
 function renderNews(news) {
 	const newsContainer = document.querySelector('.news-container .row');
+	if (newsContainer.children.length) {
+		clearContainer(newsContainer);
+	};
 	let fragment = '';
 
 	news.forEach(item => {
@@ -116,6 +130,11 @@ function renderNews(news) {
 	newsContainer.insertAdjacentHTML('afterbegin', fragment);
 };
 
+//clear container
+function clearContainer(container) {
+	container.innerHTML = '';
+};
+
 //news item template
 function newsTemplate({ urlToImage, title, url, description }) {
 	const noImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJX_eeDPL64HX3GM8TnLhjWkhk3K-XysfYvg&usqp=CAU';
@@ -124,7 +143,7 @@ function newsTemplate({ urlToImage, title, url, description }) {
 			<div class="card">
 				<div class="card-image">
 					<img src="${urlToImage || noImage}">
-					<span class="card-title">${title || ''}</span>
+					<span class="card-title">${lengthTitle(title) || ''}</span>
 				</div>
 				<div class="card-content">
 					<p>${description || title}</p>
@@ -136,3 +155,32 @@ function newsTemplate({ urlToImage, title, url, description }) {
 		</div>
 	`;
 };
+
+function lengthTitle(head) {
+	const titleLenght = head.slice(0, 120) + "...";
+	if (head.length < 120) {
+		return head
+	} else {
+		return titleLenght
+	}
+};
+
+function showMessage(msg, type = 'success') {
+	M.toast({ html: msg, classes: type });
+};
+
+function showPreloader() {
+	document.body.insertAdjacentHTML('afterbegin', `
+	<div class="progress">
+      <div class="indeterminate"></div>
+  </div>
+	`);
+};
+
+// remove loader
+function removePreoared() {
+	const loader = document.querySelector('.progress');
+	if(loader) {
+		loader.remove();
+	}
+}
