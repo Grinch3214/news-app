@@ -3,21 +3,69 @@ html, body {
 	scroll-behavior: smooth;
 }
 
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+.navbar-fixed {
+	width: 100%;
+}
+
+.brand-logo {
+	width: 56px;
+	height: 56px;
+}
+.brand-logo img {
+	width: 100%;
+}
+@media screen and (min-width: 601px) {
+	.brand-logo {
+		width: 62px;
+		height: 62px;
+	}
+}
+
+.news-container {
+	flex: 1 1 auto;
+}
+
+.grid-container {
+	gap: 20px 0;
+}
+
+.card-date {
+	font-size: 10px;
+	font-weight: bold;
+	color: #000;
+}
+
 .news-container .card-title {
   background: rgba(0, 0, 0, 0.7);
 }
 
-.card .card-title {
+.news-container .card {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.news-container .card-content {
+	flex: 1 1 auto;
+}
+
+.news-container .card .card-title {
 	font-size: 18px;
 	line-height: 24px;
 }
 
-.card .card-image {
+.news-container .card .card-image {
 	min-height: 150px;
 	background: #546e7a;
 }
 
-.card .card-image .card-title {
+.news-container .card .card-image .card-title {
 	padding: 10px 24px;
 	width: 100%;
 }

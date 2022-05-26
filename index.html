@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
+		<!-- Icon -->
+		<link rel="apple-touch-icon" sizes="180x180" href="icon/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+		<link rel="manifest" href="icon/site.webmanifest">
+		<link rel="mask-icon" href="icon/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="theme-color" content="#ffffff">
     <!-- Compiled and minified CSS -->
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -22,15 +30,72 @@
 			<nav class="blue-grey darken-1">
 				<div class="nav-wrapper">
 					<div class="col s12">
-						<a href="#" class="brand-logo">News</a>
+						<a href="#" class="brand-logo">
+							<img src="/21601.png" alt="logo">
+						</a>
 					</div>
 				</div>
 			</nav>
 		</div>
     <div class="search-controls">
       <div class="container">
-        <div class="row">
-          <div class="col s12 m6">
+				<div class="row">
+					<div class="col s12">
+						<form class="card-panel" name="newsControls">
+							<span class="card-title">Search news</span>
+							<div class="row" style="margin-bottom: 0;">
+								<div class="col s12 l4">
+									<div class="input-field">
+                    <select name="country" id="country">
+											<option value="ua">Ukraine</option>
+                      <option value="us">United States</option>
+											<option value="pl">Poland</option>
+											<option value="ru">russian</option>
+                    </select>
+                    <label>Choose your country</label>
+                  </div>
+								</div>
+								<div class="col s12 l4">
+									<div class="input-field">
+                    <select name="category" id="category">
+											<option value="general">General</option>
+											<option value="business">Business</option>
+                      <option value="entertainment">Entertainment</option>
+											<option value="health">Health</option>
+											<option value="science">Science</option>
+											<option value="sports">Sports</option>
+											<option value="technology">Technology</option>
+                    </select>
+                    <label>Choose category</label>
+                  </div>
+								</div>
+								<div class="col s12 l4">
+									<div class="input-field">
+                    <input
+                      type="text"
+                      id="autocomplete-input"
+                      class="autocomplete"
+                      name="search"
+                    />
+                    <label for="autocomplete-input">Search</label>
+                  </div>
+								</div>
+							</div>
+							<div class="card-action">
+								<button
+									class="btn waves-effect waves-light blue-grey darken-1"
+									type="submit"
+									name="action"
+								>
+									Search
+									<i class="material-icons right">search</i>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+        <!-- <div class="row">
+          <div class="col s12">
             <div class="card">
               <form name="newsControls">
                 <div class="card-content">
@@ -67,7 +132,7 @@
               </form>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="news-container">

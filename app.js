@@ -61,11 +61,11 @@ const newsService = (function() {
 	const apiUrl = 'https://newsapi.org/v2';
 
 	return {
-		topHeadLines(country = 'ua', cb) {
-			http.get(`${apiUrl}/top-headlines?country=${country}&apiKey=${apiKey}`, cb);
+		topHeadLines(country = 'ua', category = 'general', cb) {
+			http.get(`${apiUrl}/top-headlines?country=${country}&category=${category}&pageSize=35&apiKey=${apiKey}`, cb);
 		},
 		everything(query, cb) {
-			http.get(`${apiUrl}/everything?q=${query}&apiKey=${apiKey}`, cb);
+			http.get(`${apiUrl}/everything?q=${query}&pageSize=35&apiKey=${apiKey}`, cb);
 		}
 	}
 })();
@@ -74,6 +74,7 @@ const newsService = (function() {
 const form = document.forms['newsControls'];
 const countrySelect = form.elements['country'];
 const searchInput = form.elements['search'];
+const categorySelect = form.elements['category'];
 
 form.addEventListener('submit', (e) => {
 	e.preventDefault();
@@ -90,9 +91,10 @@ function loadNews() {
 	showPreloader();
 	const country = countrySelect.value;
 	const searchText = searchInput.value;
+	const category = categorySelect.value;
 
 	if (!searchText) {
-		newsService.topHeadLines(country, onGetResponse);
+		newsService.topHeadLines(country, category, onGetResponse);
 	} else {
 		newsService.everything(searchText, onGetResponse);
 	}
@@ -107,8 +109,9 @@ function onGetResponse(err, res) {
 		return
 	}
 	if(!res.articles.length) {
-		//show empty message
-		console.log('empty res')
+		const wrapperNewsContainer = document.querySelector('.news-container .row');
+		clearContainer(wrapperNewsContainer);
+		emptyArticlesForSearch(wrapperNewsContainer);
 		return
 	}
 	renderNews(res.articles);
@@ -136,8 +139,13 @@ function clearContainer(container) {
 };
 
 //news item template
-function newsTemplate({ urlToImage, title, url, description }) {
+function newsTemplate({ urlToImage, title, url, description, publishedAt }) {
 	const noImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJX_eeDPL64HX3GM8TnLhjWkhk3K-XysfYvg&usqp=CAU';
+	let year = publishedAt.slice(0, 4);
+	let month = publishedAt.slice(5, 7);
+	let date = publishedAt.slice(8, 10);
+	let time = publishedAt.slice(11, 16);
+	let publish = `${time}, ${date}.${month}.${year}`
 	return `
 		<div class="col s12">
 			<div class="card">
@@ -146,6 +154,7 @@ function newsTemplate({ urlToImage, title, url, description }) {
 					<span class="card-title">${lengthTitle(title) || ''}</span>
 				</div>
 				<div class="card-content">
+					<span class="card-date">${publish}</span>
 					<p>${description || title}</p>
 				</div>
 				<div class="card-action">
@@ -184,3 +193,17 @@ function removePreoared() {
 		loader.remove();
 	}
 }
+
+//card for bad value search
+function emptyArticlesForSearch(container) {
+	container.insertAdjacentHTML('afterbegin',
+	`
+		<div class="col s12">
+			<div class="card-panel blue-grey darken-1">
+				<span class="white-text">
+					You have made an incorrect request. Try again, please!
+				</span>
+			</div>
+		</div>
+	`);
+};
